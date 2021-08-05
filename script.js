@@ -13,6 +13,12 @@ $(document).ready(function(){
         }else{
             $('.scroll-container').removeClass("show");
         }
+        
+        if(this.scrollY > 1600 && this.scrollY < 2600){
+            $('.progress').addClass("progress-animation");
+        }else{
+            $('.progress').removeClass("progress-animation");
+        }
     });
 
     $('.scroll-up-btn').mouseenter(function(){
@@ -53,42 +59,29 @@ $(document).ready(function(){
         backSpeed: 60,
         loop: true
     });
-
-    window.addEventListener("scroll", () => {
-        skillsEffect();
-    });
-
-    const skills_wrap = document.querySelector(".card");
-
-    function checkScroll(el) {
-        let rect = el.getBoundingClientRect();
-        if (window.innerHeight >= rect.top + el.offsetHeight) return true;
-        return false;
-    }
     
-    function skillsEffect() {
-        if (!checkScroll(skills_wrap)) return;
-        percent.addClass("progress-animation");
-        setInterval(animate, 50);
-    }
-
-    var percent = document.querySelector('.percent');
-    // var progress = document.querySelector('.progress');
-    var count = 4;
-    // var per = 16;
-    // var loading = setInterval(animate, 50);
     function animate(){
-        // if(count == 100 && per == 400){
-        //     percent.classList.add("progress-animation");
-        //     clearInterval(loading);
-        if(count == 100){
-            clearInterval(loading);
-        } else {
-            // per += 4;
-            count++;
-            // progress.style.width = per + 'px';
-            percent.textContent = count + '%';
-        }
+        const percents = document.querySelectorAll('.um');
+        // const speed = 100;
+        percents.forEach(percent => {
+            const updatePercent = () => {
+                const target = +percent.getAttribute('data-target').replace('%','');
+                const count = +percent.textContent.replace('%','');
+                // const inc = parseInt(target / speed);
+
+                console.log("Valor: ", count);
+                console.log("Tipo: ", typeof target);
+
+                if(count < target) {
+                    percent.textContent = count + 1 + '%';
+                    setTimeout(updatePercent, 30);
+                } else {
+                    count.textContent = target + '%';
+                }
+            }
+
+            updatePercent();
+        })
     }
 
     // owl carousel script
