@@ -1,3 +1,40 @@
+const maxWidth = document.querySelector(".content");
+
+//criar barra
+let bar = document.createElement("div");
+//estilo da barra
+bar.style.height = "4px";
+bar.style.width = "0";
+bar.style.backgroundColor = "#fff"
+bar.style.position = "fixed";
+bar.style.top = "0";
+bar.style.left = "0";
+bar.style.zIndex = "9999";
+bar.style.transition = "0.2s"
+
+//adiciona no corpo da página
+document.body.append(bar);
+
+//atualizar a barra
+function updatedBar() {
+    //tamanho da caixa que contém o texto
+    const textHeight = maxWidth.offsetHeight;
+    
+    //verificar em que posição da página estou
+    const pagePositionY = window.pageYOffset;
+    const maxPagePositionY = 3390;
+    
+    //lógica
+    const percentBar = parseInt(pagePositionY) * 100 / maxPagePositionY;
+    bar.style.width = percentBar + "%";
+}
+
+//verificar o movimento do scroll
+document.addEventListener("scroll", updatedBar);
+// document.addEventListener("load", () => {
+    
+// })
+
 $(document).ready(function(){
     $(window).scroll(function(){
         // sticky navbar on scroll script
